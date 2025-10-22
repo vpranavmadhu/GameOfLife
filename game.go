@@ -1,22 +1,30 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Grid struct {
 	size uint
-	grid [][]bool
+	data [][]bool
 }
 
 func newGrid(size uint) Grid {
 
+	grid := make([][]bool, size)
+
+	for i := 0; i < int(size); i++ {
+		grid[i] = make([]bool, size)
+	}
+
 	return Grid{
 		size: size,
-		grid: make([][]bool, size),
+		data: grid,
 	}
 }
 
 func displayGrid(grid Grid) string {
-	return "hi"
+	return ""
 }
 
 func newGeneration(grid Grid) Grid {
@@ -47,4 +55,5 @@ func main() {
 		grid = newGeneration(grid)
 
 	}
+
 }
