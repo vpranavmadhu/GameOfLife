@@ -47,9 +47,6 @@ func displayGrid(grid Grid) string {
 	return display.String()
 }
 
-func newGeneration(grid Grid) Grid {
-	return grid
-}
 func b2i(b bool) int {
 	if b {
 		return 1
@@ -91,15 +88,24 @@ func countAliveNeighbours(grid Grid, x uint, y uint) int {
 		return b2i(grid.data[x-1][y]) + b2i(grid.data[x+1][y]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x][y-1]) + b2i(grid.data[x+1][y-1])
 	}
 
-	if x > 0 && x < grid.size-1 && y > 0 && y < grid.size-1 { //middle
-		return b2i(grid.data[x-1][y]) + b2i(grid.data[x+1][y]) + b2i(grid.data[x][y+1]) + b2i(grid.data[x][y-1]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x+1][y+1]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x+1][y-1])
-
-	}
-	return 0
+	return b2i(grid.data[x-1][y]) + b2i(grid.data[x+1][y]) + b2i(grid.data[x][y+1]) + b2i(grid.data[x][y-1]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x+1][y+1]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x+1][y-1])
 }
 
-func applyRules(grid Grid) Grid {
-	return grid
+func runGeneration(grid Grid) Grid {
+	newGen := newGrid(grid.size)
+	for i := 0; i < int(grid.size); i++ {
+		for j := 0; j < int(grid.size); j++ {
+			cell := grid.data[i][j]
+			count := countAliveNeighbours(grid, uint(i), uint(j))
+
+			if cell && count < 2 { //underpopulation
+				newGen.data[i][j] = false
+			}
+
+		}
+	}
+
+	return newGen
 }
 
 func main() {
