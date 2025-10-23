@@ -59,25 +59,30 @@ func b2i(b bool) int {
 
 func countAliveNeighbours(grid Grid, x uint, y uint) int {
 	if x == 0 {
-		if y == 0 {
+		if y == 0 { //top left corner
 			return b2i(grid.data[x][y+1]) + b2i(grid.data[x+1][y+1]) + b2i(grid.data[x+1][y])
-		} else if y == grid.size-1 {
+		} else if y == grid.size-1 { //top right corner
 			return b2i(grid.data[x][y-1]) + b2i(grid.data[x+1][y-1]) + b2i(grid.data[x+1][y])
-		} else {
+		} else { //top edge
 			return b2i(grid.data[x][y-1]) + b2i(grid.data[x+1][y-1]) + b2i(grid.data[x+1][y]) + b2i(grid.data[x+1][y+1]) + b2i(grid.data[x][y+1])
 		}
 	}
 
 	if x == grid.size-1 {
-		if y == 0 {
+		if y == 0 { //bottom left corner
 			return b2i(grid.data[x][y+1]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x-1][y])
-		} else if y == grid.size-1 {
+		} else if y == grid.size-1 { //bottom right corner
 			return b2i(grid.data[x-1][y]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x][y-1])
-		} else {
+		} else { //bottom edge
 			return b2i(grid.data[x][y-1]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x-1][y]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x][y+1])
 		}
 
 	}
+
+	if y == 0 { //left edge
+		return b2i(grid.data[x-1][y]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x][y+1]) + b2i(grid.data[x+1][y+1]) + b2i(grid.data[x+1][y])
+	}
+
 	return 0
 }
 
