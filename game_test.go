@@ -26,3 +26,22 @@ func TestNewGrid(t *testing.T) {
 	}
 
 }
+
+func TestDisplayGrid(t *testing.T) {
+
+	grid := Grid{
+		size: 3,
+		data: [][]bool{
+			{true, false, false},
+			{false, true, false},
+			{false, false, true},
+		},
+	}
+	actual := displayGrid(grid)
+	expected := "■ - - \n- ■ - \n- - ■ \n"
+
+	if actual != expected {
+		t.Errorf("Expected : \n%s ,but got : %s", expected, actual)
+	}
+
+}
