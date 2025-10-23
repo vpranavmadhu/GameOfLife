@@ -314,3 +314,13 @@ func TestRule1(t *testing.T) { //underpopulation
 	}
 
 }
+
+func TestRule2(t *testing.T) { //survival
+	grid := newGrid(4, 1, 1, 1, 2, 1, 3, 3, 3)
+	actual := runGeneration(grid)
+	expected := newGrid(4, 1, 2)
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("Expected: %v but got: %v", expected, actual)
+	}
+}
