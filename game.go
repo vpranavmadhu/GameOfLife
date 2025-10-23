@@ -58,6 +58,11 @@ func b2i(b bool) int {
 }
 
 func countAliveNeighbours(grid Grid, x uint, y uint) int {
+
+	if grid.size == 1 {
+		return 0
+	}
+
 	if x == 0 {
 		if y == 0 { //top left corner
 			return b2i(grid.data[x][y+1]) + b2i(grid.data[x+1][y+1]) + b2i(grid.data[x+1][y])
@@ -84,6 +89,11 @@ func countAliveNeighbours(grid Grid, x uint, y uint) int {
 	}
 	if y == grid.size-1 { //right edge
 		return b2i(grid.data[x-1][y]) + b2i(grid.data[x+1][y]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x][y-1]) + b2i(grid.data[x+1][y-1])
+	}
+
+	if x > 0 && x < grid.size-1 && y > 0 && y < grid.size-1 { //middle
+		return b2i(grid.data[x-1][y]) + b2i(grid.data[x+1][y]) + b2i(grid.data[x][y+1]) + b2i(grid.data[x][y-1]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x+1][y+1]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x+1][y-1])
+
 	}
 	return 0
 }
