@@ -64,8 +64,15 @@ func countAliveNeighbours(grid Grid, x uint, y uint) int {
 		} else if y == grid.size-1 {
 			return b2i(grid.data[x][y-1]) + b2i(grid.data[x+1][y-1]) + b2i(grid.data[x+1][y])
 		}
-	} else if x == grid.size-1 && y == 0 {
-		return b2i(grid.data[x][y+1]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x-1][y])
+	}
+
+	if x == grid.size-1 {
+		if y == 0 {
+			return b2i(grid.data[x][y+1]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x-1][y])
+		} else if y == grid.size-1 {
+			return b2i(grid.data[x-1][y]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x][y-1])
+		}
+
 	}
 	return 0
 }
