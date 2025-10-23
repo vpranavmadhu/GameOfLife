@@ -46,7 +46,7 @@ func TestDisplayGrid(t *testing.T) {
 
 }
 
-func TestCountAliveNeighbourTopLeftCorner(t *testing.T) {
+func TestCountAliveNeighboursTopLeftCorner(t *testing.T) {
 	grid := newGrid(5, 0, 1)
 	actual := countAliveNeighbours(grid, 0, 0)
 
@@ -66,7 +66,7 @@ func TestCountAliveNeighbourTopLeftCorner(t *testing.T) {
 	}
 }
 
-func TestCountAliveNeighbourTopRightCorner(t *testing.T) {
+func TestCountAliveNeighboursTopRightCorner(t *testing.T) {
 	grid := newGrid(5, 0, 3)
 	actual := countAliveNeighbours(grid, 0, 4)
 
@@ -86,7 +86,7 @@ func TestCountAliveNeighbourTopRightCorner(t *testing.T) {
 	}
 }
 
-func TestCountAliveNeighbourBottomLeft(t *testing.T) {
+func TestCountAliveNeighboursBottomLeftCorner(t *testing.T) {
 	grid := newGrid(5, 3, 0)
 	actual := countAliveNeighbours(grid, 4, 0)
 
@@ -106,7 +106,7 @@ func TestCountAliveNeighbourBottomLeft(t *testing.T) {
 	}
 }
 
-func TestCountAliveNeighbourBottomRight(t *testing.T) {
+func TestCountAliveNeighboursBottomRightCorner(t *testing.T) {
 	grid := newGrid(5, 4, 3)
 	actual := countAliveNeighbours(grid, 4, 4)
 
@@ -302,4 +302,15 @@ func TestCountAliveNeighboursMiddle(t *testing.T) {
 	if actual != 8 {
 		t.Errorf("Expected neighbour count to be 8, but got %d", actual)
 	}
+}
+
+func TestRule1(t *testing.T) { //underpopulation
+	grid := newGrid(4, 0, 0, 3, 3)
+	actual := runGeneration(grid)
+	expected := newGrid(4)
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("Expected: %v but got: %v", expected, actual)
+	}
+
 }
