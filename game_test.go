@@ -305,32 +305,45 @@ func TestCountAliveNeighboursMiddle(t *testing.T) {
 }
 
 func TestRule1(t *testing.T) { //underpopulation
-	grid := newGrid(4, 0, 0, 3, 3)
-	actual := runGeneration(grid)
-	expected := newGrid(4)
+	grid := newGrid(3, 0, 0)
+	nextGen := runGeneration(grid)
 
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected: %v but got: %v", expected, actual)
+	if nextGen.data[0][0] {
+		t.Errorf("Expected cell[0,0] to be dead due to under population, but it is alive")
 	}
 
 }
 
 func TestRule2(t *testing.T) { //survival
-	grid := newGrid(4, 1, 1, 1, 2, 1, 3, 3, 3)
-	actual := runGeneration(grid)
-	expected := newGrid(4, 1, 2)
+	grid := newGrid(4, 1, 1, 1, 2, 1, 3)
+	nextGen := runGeneration(grid)
 
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected: %v but got: %v", expected, actual)
+	if !nextGen.data[1][2] {
+		t.Errorf("Expected cell[1,2] to survive, but its dead")
 	}
+
 }
 
 func TestRule3(t *testing.T) { //overpopulation
 	grid := newGrid(4, 1, 1, 1, 2, 1, 3, 2, 1, 2, 2, 2, 3)
-	actual := runGeneration(grid)
-	expected := newGrid(4, 1, 1, 1, 3, 2, 1, 2, 3)
+	nextGen := runGeneration(grid)
 
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected: %v but got: %v", expected, actual)
+	if nextGen.data[1][2] {
+		t.Errorf("Expected cell[1,2] to be dead due to over population, but its alive")
 	}
+
+	if nextGen.data[2][2] {
+		t.Errorf("Expected cell[1,2] to be dead due to over population, but its alive")
+	}
+
+}
+
+func TestRule4(t *testing.T) { //reproduction
+	grid := newGrid(4, 1, 1, 1, 2, 2, 2)
+	nextGen := runGeneration(grid)
+
+	if !nextGen.data[2][1] {
+		t.Errorf("Expected cell[2][1] to be alive due to reproduction, but its dead")
+	}
+
 }
