@@ -107,7 +107,9 @@ func runGeneration(grid Grid) Grid {
 			if cell && count > 3 {
 				newGen.data[i][j] = false
 			}
-
+			if !cell && count == 3 {
+				newGen.data[i][j] = true
+			}
 		}
 	}
 
