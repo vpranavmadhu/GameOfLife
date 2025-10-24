@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"time"
 )
 
 type Grid struct {
@@ -87,7 +88,7 @@ func countAliveNeighbours(grid Grid, x uint, y uint) int {
 	if y == grid.size-1 { //right edge
 		return b2i(grid.data[x-1][y]) + b2i(grid.data[x+1][y]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x][y-1]) + b2i(grid.data[x+1][y-1])
 	}
-
+	//middle
 	return b2i(grid.data[x-1][y]) + b2i(grid.data[x+1][y]) + b2i(grid.data[x][y+1]) + b2i(grid.data[x][y-1]) + b2i(grid.data[x-1][y+1]) + b2i(grid.data[x+1][y+1]) + b2i(grid.data[x-1][y-1]) + b2i(grid.data[x+1][y-1])
 }
 
@@ -104,10 +105,10 @@ func runGeneration(grid Grid) Grid {
 			if cell && (count == 2 || count == 3) { //survival
 				newGen.data[i][j] = true
 			}
-			if cell && count > 3 {
+			if cell && count > 3 { //over population
 				newGen.data[i][j] = false
 			}
-			if !cell && count == 3 {
+			if !cell && count == 3 { //reproduction
 				newGen.data[i][j] = true
 			}
 		}
@@ -117,16 +118,14 @@ func runGeneration(grid Grid) Grid {
 }
 
 func main() {
-	size := 10
-	grid := newGrid(uint(size), 0, 9, 4, 4, 9, 0, 0, 0, 9, 9)
+	size := 30
+	grid := newGrid(uint(size), 3, 4, 4, 4, 5, 4)
 
-	fmt.Println(displayGrid(grid))
-	// for {
-
-	// 	fmt.Println(displayGrid(grid))
-	// 	grid = applyRules(grid)
-	// 	grid = newGeneration(grid)
-
-	// }
+	for {
+		fmt.Print("\033[H\033[2J\033[3J")
+		fmt.Print(displayGrid(grid))
+		time.Sleep(1 * time.Second)
+		grid = runGeneration(grid)
+	}
 
 }
